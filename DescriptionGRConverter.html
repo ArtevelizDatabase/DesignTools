@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to HTML Converter - DesignTools</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <script>
+        // Tailwind dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        /* Menggunakan font yang umum dan mudah dibaca seperti Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">DesignTools</a>
+            <div class="nav-links" id="nav-links">
+                <a href="csv-compare.html" class="nav-link">CSV Compare</a>
+                <a href="keyword-bank.html" class="nav-link">Keyword Bank</a>
+                <a href="resize-image.html" class="nav-link">Image Resizer</a>
+                <a href="DescriptionGRConverter.html" class="nav-link">Text to HTML</a>
+                <a href="CalculatorGaji.html" class="nav-link">Salary Calculator</a>
+                <button id="theme-toggle-btn"><span class="theme-icon"></span></button>
+            </div>
+            <button id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scroll-to-top-btn">↑</button>
+
+    <main class="converter-container flex-1 w-full max-w-7xl mx-auto p-6 sm:p-8 my-8 rounded-2xl border">
+        
+        <!-- Bagian Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold converter-page-title">Text to HTML Converter</h1>
+            <p class="mt-2 converter-page-subtitle">Tulis di panel kiri dan lihat kode serta pratinjau langsung di sebelah kanan.</p>
+        </div>
+
+        <!-- Grid Konverter -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Kolom Input -->
+            <div class="flex flex-col">
+                <label for="markdown-input" class="block text-sm font-medium mb-2 converter-label">Teks Anda (Seperti Markdown)</label>
+                <textarea 
+                    id="markdown-input"
+                    class="converter-textarea w-full h-96 p-4 border rounded-lg shadow-sm focus:outline-none transition duration-200 resize-none flex-grow"
+                    placeholder="Mulai mengetik di sini...
+
+**Ini adalah teks tebal**
+
+*Ini adalah teks miring*
+
+- Item daftar pertama
+- Item daftar kedua
+
+---
+
+[Ini adalah tautan ke Google](https://www.google.com)
+
+Paragraf baru setelah pemisah."
+                ></textarea>
+            </div>
+
+            <!-- Kolom Output -->
+            <div class="flex flex-col">
+                <label for="html-output" class="block text-sm font-medium mb-2 converter-label">Hasil HTML</label>
+                <textarea 
+                    id="html-output"
+                    readonly
+                    class="converter-textarea w-full h-96 p-4 border rounded-lg shadow-sm focus:outline-none transition duration-200 resize-none flex-grow"
+                    placeholder="Output HTML akan muncul di sini..."
+                ></textarea>
+            </div>
+
+            <!-- Kolom Pratinjau -->
+            <div class="flex flex-col">
+                <label for="preview-frame" class="block text-sm font-medium mb-2 converter-label">Pratinjau Langsung</label>
+                <iframe 
+                    id="preview-frame"
+                    class="w-full h-96 flex-grow"
+                    title="Live Preview"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- Tombol Aksi -->
+        <div class="mt-6 text-center">
+            <button id="copy-button" class="converter-button font-semibold py-3 px-8 rounded-lg shadow-md focus:outline-none focus:ring-4 transition-all duration-300 transform hover:scale-105">
+                Salin HTML
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modal untuk Tambah Tautan -->
+    <div id="link-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="modal-content p-6 rounded-lg shadow-xl w-full max-w-sm transform transition-all duration-300 scale-95 border">
+            <h3 class="text-lg font-medium mb-4">Tambah Tautan</h3>
+            <p class="text-sm mb-2 opacity-70" for="url-input">Masukkan URL:</p>
+            <input type="url" id="url-input" class="modal-input w-full p-2 border rounded-md focus:outline-none transition-colors" placeholder="https://...">
+            <div class="mt-6 flex justify-end space-x-3">
+                <button id="cancel-link-button" class="modal-cancel-button px-4 py-2 rounded-md transition-colors">Batal</button>
+                <button id="confirm-link-button" class="converter-button px-4 py-2 rounded-md transition-colors">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Referensi Elemen DOM
+        const markdownInput = document.getElementById('markdown-input');
+        const htmlOutput = document.getElementById('html-output');
+        const copyButton = document.getElementById('copy-button');
+        const previewFrame = document.getElementById('preview-frame');
+        
+        // Referensi Modal
+        const linkModal = document.getElementById('link-modal');
+        const urlInput = document.getElementById('url-input');
+        const confirmLinkButton = document.getElementById('confirm-link-button');
+        const cancelLinkButton = document.getElementById('cancel-link-button');
+        
+        // Variabel untuk menyimpan posisi seleksi
+        let selectionStart = 0;
+        let selectionEnd = 0;
+
+        /**
+         * Mengonversi teks seperti markdown menjadi HTML terstruktur.
+         * @param {string} text - Teks input dari textarea.
+         * @returns {string} - String HTML yang telah dikonversi.
+         */
+        function convertTextToHtml(text) {
+            let processedText = text.trim();
+
+            // Aturan: Konversi Tautan [teks](url) menjadi <a href="url">teks</a>
+            processedText = processedText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+            const blocks = processedText.split(/\n\s*\n/);
+
+            const processedBlocks = blocks.map(block => {
+                if (/^-{3,}$/.test(block)) return '<hr />';
+                if (block.startsWith('- ')) {
+                    const listItems = block.split('\n').map(item => `    <li>${item.substring(2).trim()}</li>`).join('\n');
+                    return `<ul>\n${listItems}\n</ul>`;
+                }
+                if (!block.startsWith('<')) return `<p>${block.replace(/\n/g, '<br>')}</p>`;
+                return block;
+            });
+
+            let html = processedBlocks.join('\n\n');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            return html;
+        }
+
+        /**
+         * Memperbarui output HTML dan pratinjau langsung.
+         */
+        function updateOutput() {
+            const convertedHtml = convertTextToHtml(markdownInput.value);
+            htmlOutput.value = convertedHtml;
+
+            // Deteksi tema saat ini
+            const isDarkMode = document.body.classList.contains('dark');
+            
+            // Warna untuk tema terang
+            const lightColors = {
+                background: '#ffffff',
+                text: '#334155',
+                link: '#2563eb',
+                border: '#e2e8f0'
+            };
+            
+            // Warna untuk tema gelap
+            const darkColors = {
+                background: '#1f2937',
+                text: '#f9fafb',
+                link: '#60a5fa',
+                border: '#374151'
+            };
+            
+            const colors = isDarkMode ? darkColors : lightColors;
+
+            const previewContent = `
+                <!DOCTYPE html><html><head><style>
+                    body { 
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+                        padding: 1rem; 
+                        color: ${colors.text}; 
+                        background-color: ${colors.background}; 
+                        line-height: 1.6; 
+                        margin: 0;
+                    }
+                    a { 
+                        color: ${colors.link}; 
+                        text-decoration: none; 
+                    } 
+                    a:hover { 
+                        text-decoration: underline; 
+                    }
+                    hr { 
+                        border: none; 
+                        border-top: 1px solid ${colors.border}; 
+                        margin: 1rem 0; 
+                    }
+                    ul { 
+                        padding-left: 20px; 
+                    } 
+                    p { 
+                        margin: 0 0 1em 0; 
+                    } 
+                    strong { 
+                        font-weight: 600; 
+                        color: ${colors.text};
+                    }
+                    em {
+                        color: ${colors.text};
+                    }
+                </style></head><body>${convertedHtml}</body></html>`;
+            previewFrame.srcdoc = previewContent;
+        }
+
+        // --- Logika untuk Modal Tautan Otomatis ---
+
+        // Tampilkan modal saat teks diseleksi
+        markdownInput.addEventListener('mouseup', (e) => {
+            // Sedikit penundaan untuk memastikan posisi seleksi sudah final
+            setTimeout(() => {
+                const start = markdownInput.selectionStart;
+                const end = markdownInput.selectionEnd;
+                if (start !== end) {
+                    selectionStart = start;
+                    selectionEnd = end;
+                    linkModal.classList.remove('hidden');
+                    // Tampilkan animasi
+                    linkModal.querySelector('div').classList.remove('scale-95');
+                    urlInput.value = 'https://';
+                    urlInput.focus();
+                    urlInput.select();
+                }
+            }, 50);
+        });
+        
+        function hideModal() {
+            linkModal.querySelector('div').classList.add('scale-95');
+            linkModal.classList.add('hidden');
+        }
+
+        // Fungsi untuk menerapkan tautan
+        function applyLink() {
+            const selectedText = markdownInput.value.substring(selectionStart, selectionEnd);
+            const url = urlInput.value.trim();
+
+            if (url && url !== 'https://' && selectedText) {
+                const newText = `[${selectedText}](${url})`;
+                const before = markdownInput.value.substring(0, selectionStart);
+                const after = markdownInput.value.substring(selectionEnd);
+                markdownInput.value = before + newText + after;
+                
+                updateOutput();
+                markdownInput.focus();
+                // Atur kursor setelah teks yang baru disisipkan
+                markdownInput.setSelectionRange(selectionStart + newText.length, selectionStart + newText.length);
+            }
+            hideModal();
+        }
+
+        confirmLinkButton.addEventListener('click', applyLink);
+        cancelLinkButton.addEventListener('click', hideModal);
+        
+        // Izinkan menekan Enter di input URL untuk konfirmasi
+        urlInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                applyLink();
+            }
+            if (e.key === 'Escape') {
+                hideModal();
+            }
+        });
+
+
+        // Event Listener: Konversi teks saat ada input
+        markdownInput.addEventListener('input', updateOutput);
+
+        // Event Listener: Update pratinjau saat tema berubah
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    // Tema berubah, update pratinjau
+                    updateOutput();
+                }
+            });
+        });
+        
+        // Observasi perubahan class pada body (untuk deteksi tema)
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        // Event Listener: Salin HTML ke clipboard
+            copyButton.addEventListener('click', () => {
+            if (!htmlOutput.value) return;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = htmlOutput.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            try {
+                document.execCommand('copy');
+                copyButton.textContent = 'Tersalin!';
+                copyButton.classList.remove('converter-button');
+                copyButton.classList.add('converter-button', 'success');
+                setTimeout(() => {
+                    copyButton.textContent = 'Salin HTML';
+                    copyButton.classList.remove('success');
+                }, 2000);
+            } catch (err) {
+                console.error('Gagal menyalin teks: ', err);
+            } finally {
+                document.body.removeChild(tempTextArea);
+            }
+        });
+
+        // Lakukan konversi awal
+        updateOutput();
+    </script>
+
+    <!-- Load common.js for theme and navbar functionality -->
+    <script src="js/common.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator - DesignTools</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <script>
+        // Tailwind dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS untuk styling halaman -->
+    <style>
+    <!-- CSS untuk styling halaman -->
+    <style>
+        /* Salary Calculator Custom Styles */
+        .salary-calculator-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .salary-form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+        
+        .salary-periode-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .salary-periode-group .salary-form-group {
+            flex: 1;
+        }
+
+        .salary-form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+        
+        .salary-label-auto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .salary-auto-badge {
+            background-color: var(--active-link-color);
+            color: white;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .salary-input-wrapper {
+            position: relative;
+        }
+
+        .salary-input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 1.1em;
+            pointer-events: none;
+        }
+
+        .salary-input, .salary-select {
+            width: 100%;
+            padding: 14px 14px 14px 50px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1em;
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'Inter', sans-serif;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        
+        .salary-input:focus, .salary-select:focus {
+            border-color: var(--active-link-color);
+            box-shadow: 0 0 0 2px var(--active-link-color);
+            opacity: 0.3;
+            outline: none;
+        }
+        
+        .salary-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23666' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+        
+        .salary-currency-input {
+            text-align: right;
+            padding-left: 14px;
+        }
+        
+        .salary-input[readonly] {
+            background-color: var(--bg-color);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        
+        /* Styling untuk Tunjangan Dinamis */
+        #dynamic-allowances-container .allowance-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        #dynamic-allowances-container .allowance-row input:first-child {
+            flex: 1;
+            padding-left: 14px;
+        }
+        #dynamic-allowances-container .allowance-row input:last-of-type {
+            flex: 2;
+        }
+        .remove-allowance-btn {
+            background: transparent;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 10px;
+        }
+        #addAllowanceBtn {
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            border: 2px dashed var(--border-color);
+            color: var(--text-color);
+            opacity: 0.7;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        #addAllowanceBtn:hover {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            opacity: 1;
+        }
+
+        .salary-button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .salary-button {
+            flex-grow: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #btnReset {
+            background-color: transparent;
+            color: var(--text-color);
+            opacity: 0.7;
+            border: 1px solid var(--border-color);
+        }
+
+        #btnReset:hover {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            opacity: 1;
+        }
+
+        .salary-hasil-container {
+            margin-top: 35px;
+            padding: 25px;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .salary-hasil-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .salary-hasil-item:last-child {
+            border-bottom: none;
+        }
+
+        .salary-hasil-item span:first-child {
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .salary-hasil-item span:last-child {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--text-color);
+        }
+
+        .salary-hasil-total {
+            background-color: var(--active-link-color);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .salary-hasil-item.salary-hasil-total span {
+            color: white;
+        }
+        
+        .salary-hasil-total span:last-child {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .salary-bonus-color {
+            color: var(--success-color);
+        }
+
+        .salary-hr {
+            border: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+
+        #error-message {
+            color: var(--danger-color);
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            font-weight: 500;
+            min-height: 1.2em;
+        }
+
+        @media (max-width: 580px) {
+            .salary-periode-group { 
+                flex-direction: column; 
+                gap: 0;
+            }
+            .salary-button-group { 
+                flex-direction: column; 
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">DesignTools</a>
+            <div class="nav-links" id="nav-links">
+                <a href="csv-compare.html" class="nav-link">CSV Compare</a>
+                <a href="keyword-bank.html" class="nav-link">Keyword Bank</a>
+                <a href="resize-image.html" class="nav-link">Image Resizer</a>
+                <a href="DescriptionGRConverter.html" class="nav-link">Text to HTML</a>
+                <a href="CalculatorGaji.html" class="nav-link">Salary Calculator</a>
+                <button id="theme-toggle-btn"><span class="theme-icon"></span></button>
+            </div>
+            <button id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scroll-to-top-btn">↑</button>
+
+    <div class="flex-1 flex items-center justify-center p-4">
+        <div class="salary-calculator-container w-full max-w-lg p-8 rounded-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold converter-page-title">Salary Calculator</h1>
+            <p class="mt-2 converter-page-subtitle">Hitung gaji bersih Anda secara akurat</p>
+        </div>
+        
+        <form id="salaryForm">
+            <!-- Bagian Periode Penggajian -->
+            <div class="salary-periode-group">
+                <div class="salary-form-group">
+                    <label for="pilihBulan">Bulan</label>
+                    <div class="salary-input-wrapper">
+                        <i class="fa-solid fa-calendar-alt"></i>
+                        <select id="pilihBulan" class="salary-select"></select>
+                    </div>
+                </div>
+                <div class="salary-form-group">
+                    <label for="pilihTahun">Tahun</label>
+                    <div class="salary-input-wrapper">
+                         <i class="fa-solid fa-calendar-alt"></i>
+                        <select id="pilihTahun" class="salary-select"></select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="salary-form-group">
+                <label for="hariLibur">Hari Libur Nasional (pisahkan dengan koma)</label>
+                <div class="salary-input-wrapper">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <input type="text" id="hariLibur" class="salary-input" placeholder="Contoh: 1, 17, 25">
+                </div>
+            </div>
+            
+            <hr class="salary-hr">
+
+            <!-- Bagian Input Gaji -->
+            <div class="salary-form-group">
+                <label for="gajiBulanan">Gaji Pokok</label>
+                <div class="salary-input-wrapper">
+                    <i class="fa-solid fa-wallet"></i>
+                    <input type="text" id="gajiBulanan" class="salary-input salary-currency-input" required>
+                </div>
+            </div>
+            <div class="salary-form-group">
+                <label for="hariKerja" class="salary-label-auto">
+                    <span>Total Hari Kerja Efektif</span>
+                    <span class="salary-auto-badge">AUTO</span>
+                </label>
+                <div class="salary-input-wrapper">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <input type="text" id="hariKerja" class="salary-input" readonly>
+                </div>
+            </div>
+            
+            <!-- PERUBAHAN: Mengembalikan Jumlah Absen -->
+            <div class="salary-form-group">
+                <label for="hariAlpha">Jumlah Absen (Tanpa Keterangan)</label>
+                <div class="salary-input-wrapper">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <input type="text" id="hariAlpha" class="salary-input" placeholder="0" required>
+                </div>
+            </div>
+            
+            <!-- PERUBAHAN: Membuat Jumlah Hari Masuk menjadi otomatis -->
+            <div class="salary-form-group">
+                <label for="hariMasuk" class="salary-label-auto">
+                    <span>Jumlah Hari Masuk</span>
+                    <span class="salary-auto-badge">AUTO</span>
+                </label>
+                <div class="salary-input-wrapper">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <input type="text" id="hariMasuk" class="salary-input" readonly>
+                </div>
+            </div>
+            
+            <!-- Tunjangan Dinamis -->
+            <div class="salary-form-group">
+                 <label>Bonus & Tunjangan Lainnya</label>
+                 <div id="dynamic-allowances-container">
+                     <!-- Tunjangan akan ditambahkan di sini oleh JS -->
+                 </div>
+                 <button type="button" id="addAllowanceBtn" class="salary-button">
+                    <i class="fa-solid fa-plus"></i> Tambah Tunjangan
+                 </button>
+            </div>
+            
+            <div id="error-message"></div>
+
+            <div class="salary-button-group">
+                <button type="button" id="btnReset" class="salary-button">Reset</button>
+            </div>
+        </form>
+
+        <div id="hasil" class="salary-hasil-container">
+            <div class="salary-hasil-item">
+                <span>Gaji Per Hari</span>
+                <span id="hasilGajiPerHari"></span>
+            </div>
+            <div class="salary-hasil-item">
+                <span>Gaji Pokok Diterima (Pro-rata)</span>
+                <span id="hasilGajiProrata"></span>
+            </div>
+            <div class="salary-hasil-item">
+                <span>Total Tunjangan</span>
+                <span id="hasilBonus" class="salary-bonus-color"></span>
+            </div>
+            <div class="salary-hasil-item salary-hasil-total">
+                <span>Gaji Bersih Diterima</span>
+                <span id="hasilTotalGaji"></span>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mengambil elemen-elemen DOM
+            const form = document.getElementById('salaryForm');
+            const bulanEl = document.getElementById('pilihBulan');
+            const tahunEl = document.getElementById('pilihTahun');
+            const hariLiburEl = document.getElementById('hariLibur');
+            const gajiBulananEl = document.getElementById('gajiBulanan');
+            const hariKerjaEl = document.getElementById('hariKerja');
+            const hariAlphaEl = document.getElementById('hariAlpha'); // PERUBAHAN: Dikembalikan
+            const hariMasukEl = document.getElementById('hariMasuk'); // PERUBAHAN: Sekarang readonly
+            const errorMessageEl = document.getElementById('error-message');
+            const hasilContainer = document.getElementById('hasil');
+            const btnReset = document.getElementById('btnReset');
+            const addAllowanceBtn = document.getElementById('addAllowanceBtn');
+            const allowancesContainer = document.getElementById('dynamic-allowances-container');
+
+            // --- FUNGSI FORMATTING DAN PARSING ---
+            function formatCurrency(element) {
+                let value = element.value.replace(/[^0-9]/g, '');
+                element.value = value ? parseInt(value, 10).toLocaleString('id-ID') : '';
+            }
+            
+            function parseCurrency(value) {
+                return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
+            }
+
+            function formatRupiah(angka) {
+                if (isNaN(angka)) return 'Rp 0';
+                return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
+            }
+
+            // --- INISIALISASI ---
+            function initializeApp() {
+                const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                namaBulan.forEach((bulan, index) => {
+                    bulanEl.add(new Option(bulan, index));
+                });
+
+                const tahunSekarang = new Date().getFullYear();
+                for (let i = tahunSekarang - 5; i <= tahunSekarang + 5; i++) {
+                    tahunEl.add(new Option(i, i));
+                }
+                
+                bulanEl.value = new Date().getMonth();
+                tahunEl.value = tahunSekarang;
+
+                gajiBulananEl.value = "2500000";
+                formatCurrency(gajiBulananEl);
+
+                hitungHariKerja();
+            }
+
+            // --- FUNGSI PERHITUNGAN UTAMA ---
+            function hitungHariKerja() {
+                const bulan = parseInt(bulanEl.value);
+                const tahun = parseInt(tahunEl.value);
+                const liburInput = hariLiburEl.value.split(',').map(tgl => parseInt(tgl.trim())).filter(tgl => !isNaN(tgl));
+                
+                let jumlahHariKerja = 0;
+                const jumlahHariDiBulan = new Date(tahun, bulan + 1, 0).getDate();
+
+                for (let hari = 1; hari <= jumlahHariDiBulan; hari++) {
+                    const tanggal = new Date(tahun, bulan, hari);
+                    const hariDalamMinggu = tanggal.getDay(); // 0 = Minggu, 6 = Sabtu
+                    const bukanAkhirPekan = hariDalamMinggu !== 0 && hariDalamMinggu !== 6;
+                    const bukanLiburNasional = !liburInput.includes(hari);
+                    if (bukanAkhirPekan && bukanLiburNasional) {
+                        jumlahHariKerja++;
+                    }
+                }
+                hariKerjaEl.value = jumlahHariKerja;
+                hariAlphaEl.value = 0; // Reset absen ke 0
+                hariMasukEl.value = jumlahHariKerja; // Hari masuk = hari kerja efektif
+            }
+
+            function calculateSalary() {
+                hideError();
+                
+                if (!hariKerjaEl.value) hitungHariKerja();
+
+                const gajiBulanan = parseCurrency(gajiBulananEl.value);
+                const hariKerja = parseFloat(hariKerjaEl.value) || 0;
+                const hariAlpha = parseFloat(hariAlphaEl.value) || 0;
+                
+                // PERUBAHAN: Hari masuk dihitung dari hari kerja - absen
+                const hariMasuk = hariKerja - hariAlpha;
+                hariMasukEl.value = hariMasuk < 0 ? 0 : hariMasuk;
+                
+                let totalTunjangan = 0;
+                const allowanceInputs = allowancesContainer.querySelectorAll('.allowance-amount');
+                allowanceInputs.forEach(input => {
+                    totalTunjangan += parseCurrency(input.value);
+                });
+
+                // Validasi
+                if (gajiBulanan <= 0) return;
+                if (hariAlpha < 0) { showError('Input tidak boleh bernilai negatif.'); return; }
+                if (hariKerja > 0 && hariAlpha > hariKerja) { showError('Jumlah absen tidak boleh melebihi hari kerja efektif.'); return; }
+
+                // Perhitungan
+                const gajiPerHari = hariKerja > 0 ? (gajiBulanan / hariKerja) : 0;
+                const gajiProrata = gajiPerHari * hariMasuk;
+                const totalGaji = gajiProrata + totalTunjangan;
+
+                // Tampilkan hasil
+                document.getElementById('hasilGajiPerHari').textContent = formatRupiah(gajiPerHari);
+                document.getElementById('hasilGajiProrata').textContent = formatRupiah(gajiProrata);
+                document.getElementById('hasilBonus').textContent = `+ ${formatRupiah(totalTunjangan)}`;
+                document.getElementById('hasilTotalGaji').textContent = formatRupiah(totalGaji);
+                
+                hasilContainer.style.display = 'block';
+            }
+            
+            // --- FUNGSI UI & EVENT HANDLER ---
+            function showError(message) {
+                errorMessageEl.textContent = message;
+                errorMessageEl.style.display = 'block';
+                hasilContainer.style.display = 'none';
+            }
+
+            function hideError() {
+                errorMessageEl.textContent = '';
+                errorMessageEl.style.display = 'none';
+            }
+
+            function addAllowanceRow() {
+                const row = document.createElement('div');
+                row.className = 'allowance-row';
+                row.innerHTML = `
+                    <input type="text" placeholder="Nama Tunjangan" class="allowance-name salary-input">
+                    <input type="text" placeholder="Jumlah" class="allowance-amount salary-input salary-currency-input">
+                    <button type="button" class="remove-allowance-btn"><i class="fa-solid fa-trash"></i></button>
+                `;
+                allowancesContainer.appendChild(row);
+                const newAmountInput = row.querySelector('.allowance-amount');
+                newAmountInput.addEventListener('input', () => {
+                    formatCurrency(newAmountInput);
+                    calculateSalary();
+                });
+            }
+
+            // --- EVENT LISTENERS ---
+            btnReset.addEventListener('click', function() {
+                form.reset();
+                allowancesContainer.innerHTML = '';
+                bulanEl.value = new Date().getMonth();
+                tahunEl.value = new Date().getFullYear();
+                hideError();
+                hasilContainer.style.display = 'none';
+                initializeApp();
+            });
+            
+            addAllowanceBtn.addEventListener('click', addAllowanceRow);
+            
+            allowancesContainer.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-allowance-btn')) {
+                    e.target.closest('.allowance-row').remove();
+                    calculateSalary();
+                }
+            });
+
+            // PERUBAHAN: Menambahkan hariAlphaEl ke dalam list
+            [bulanEl, tahunEl, hariLiburEl, gajiBulananEl, hariAlphaEl].forEach(el => {
+                el.addEventListener('input', () => {
+                    if (el.classList.contains('salary-currency-input')) formatCurrency(el);
+                    if (['pilihBulan', 'pilihTahun', 'hariLibur'].includes(el.id)) {
+                        hitungHariKerja();
+                    }
+                    if (gajiBulananEl.value) calculateSalary();
+                    else hasilContainer.style.display = 'none';
+                });
+            });
+
+            // Jalankan inisialisasi
+            initializeApp();
+        });
+    </script>
+
+    <!-- Load common.js for theme and navbar functionality -->
+    <script src="js/common.js"></script>
+
+</body>
+</html>

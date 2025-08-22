@@ -1,0 +1,315 @@
+/* analytics.css */
+
+/* ===== Universal Form Elements for Dark Theme ===== */
+input, select, textarea, button {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-speed) ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--active-link-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ===== Button Styles ===== */
+button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+button.primary {
+    background-color: var(--active-link-color);
+    color: white;
+    border-color: var(--active-link-color);
+}
+
+button.secondary {
+    background-color: var(--button-secondary-bg);
+    color: white;
+    border-color: var(--button-secondary-bg);
+}
+
+button.danger {
+    background-color: var(--danger-color);
+    color: white;
+    border-color: var(--danger-color);
+}
+
+/* ===== Modal and Content Wrappers ===== */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.content-wrapper, .main-content {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* ===== Table Styles ===== */
+table {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+table th {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-bottom: 2px solid var(--border-color);
+}
+
+table td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+table tr:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Custom hover for sortable table headers */
+th.sortable-header:hover,
+th.sort-header:hover {
+    background-color: var(--active-link-color) !important; /* Use theme blue */
+    color: white !important; /* Ensure text is readable */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Adjust text color for icons within hovered headers */
+th.sortable-header:hover svg,
+th.sort-header:hover svg {
+    color: white !important;
+}
+
+/* Custom styles for sticky table headers */
+.table-container {
+    max-height: 60vh; /* Set a max height for the scrollable area */
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--card-bg);
+}
+
+.sticky-header th {
+    position: sticky;
+    top: 0;
+    background-color: var(--card-bg);
+    z-index: 10; /* Ensures header stays above scrolling content */
+}
+
+/* A simple transition for tab content visibility */
+.tab-content {
+    transition: opacity 0.3s ease-in-out;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* ===== Tab Navigation ===== */
+.tab-nav button {
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    color: var(--text-color);
+}
+
+.tab-nav button.active {
+    border-bottom-color: var(--active-link-color);
+    color: var(--active-link-color);
+}
+
+.tab-nav button:hover {
+    color: var(--link-hover-color);
+}
+
+/* --- Enhanced Chart Wrapper for Better Visualization --- */
+.chart-wrapper {
+    max-height: 750px; /* Increased height for better visibility */
+    overflow: auto;    /* Enable both horizontal and vertical scrolling */
+    position: relative;
+    padding: 2rem;   /* Increased padding for better spacing */
+    margin: 1.5rem 0; /* Added margin for separation */
+    border: 2px solid #e5e7eb; /* Slightly thicker border */
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%); /* Subtle gradient */
+    box-shadow: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+    transition: all 0.3s ease;
+}
+
+.chart-wrapper:hover {
+    box-shadow: 0 20px 35px -5px rgb(0 0 0 / 0.15), 0 8px 10px -3px rgb(0 0 0 / 0.1);
+}
+
+.dark .chart-wrapper {
+    border-color: #4b5563;
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+/* Chart Container Enhancements */
+.chart-container {
+    position: relative;
+    min-height: 500px;
+    min-width: 100%;
+    padding: 20px; /* Added padding inside container */
+    margin: 10px 0; /* Added margin for extra spacing */
+}
+
+/* Chart Controls - Simplified for Stacked Only */
+.chart-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+    border-radius: 0.875rem;
+    border: 2px solid rgba(99, 102, 241, 0.25);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+    transition: all 0.3s ease;
+}
+
+.chart-controls:hover {
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
+    transform: translateY(-1px);
+}
+
+.dark .chart-controls {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.12) 100%);
+    border-color: rgba(99, 102, 241, 0.35);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.dark .chart-controls:hover {
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+}
+
+/* Enhanced Custom Scrollbar Styling */
+.chart-wrapper::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+.chart-wrapper::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+}
+
+.dark .chart-wrapper::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+    border-color: #6b7280;
+}
+
+.chart-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+    border-radius: 12px;
+    border: 2px solid #f1f5f9;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .chart-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1 0%, #4338ca 100%);
+    border-color: #374151;
+}
+
+.chart-wrapper::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4f46e5 0%, #3730a3 100%);
+}
+
+.dark .chart-wrapper::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4338ca 0%, #3730a3 100%);
+}
+
+/* Corner styling for dual scrollbars */
+.chart-wrapper::-webkit-scrollbar-corner {
+    background: #f1f5f9;
+}
+
+.dark .chart-wrapper::-webkit-scrollbar-corner {
+    background: #374151;
+}
+
+/* ===== File Upload Styles ===== */
+.file-upload-area {
+    background-color: var(--card-bg);
+    border: 2px dashed var(--border-color);
+    color: var(--text-color);
+    transition: all var(--transition-speed) ease;
+}
+
+.file-upload-area:hover, .file-upload-area.dragover {
+    border-color: var(--active-link-color);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* ===== Progress Bars ===== */
+.progress-bar {
+    background-color: var(--border-color);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: var(--active-link-color);
+    transition: width 0.3s ease;
+}
+
+/* ===== Alert/Notification Styles ===== */
+.alert {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+}
+
+.alert.success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.alert.error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.alert.warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+}
+
+/* ===== Loading States ===== */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--active-link-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

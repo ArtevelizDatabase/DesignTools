@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Analysis Platform</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/analytics.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script>
+        // Tailwind dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">DesignTools</a>
+            <div class="nav-links" id="nav-links">
+                <a href="csv-compare.html" class="nav-link active">CSV Compare</a>
+                <a href="keyword-bank.html" class="nav-link">Keyword Bank</a>
+                <a href="resize-image.html" class="nav-link">Image Resizer</a>
+                <a href="DescriptionGRConverter.html" class="nav-link">Text to HTML</a>
+                <a href="CalculatorGaji.html" class="nav-link">Salary Calculator</a>
+                <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+                    <span class="theme-icon"></span>
+                </button>
+            </div>
+            <button id="hamburger-btn" title="Toggle Navigation Menu" aria-label="Toggle Navigation Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scroll-to-top-btn">↑</button>
+
+    <!-- Modal Container -->
+    <div id="modal-container" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h3 id="modal-title" class="text-xl font-semibold">Modal Title</h3>
+                <button id="modal-close-button" title="Close Modal" aria-label="Close Modal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                    ✕
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <ul id="modal-list" class="list-disc list-inside space-y-2">
+                    <!-- Modal content will be injected here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="flex flex-col items-center text-center mb-8">
+            <h1 class="text-4xl font-bold mb-2">Platform Perbandingan CSV</h1>
+            <p class="text-lg mt-2">Bandingkan data Anda dengan fitur canggih.</p>
+        </header>
+
+        <!-- File Upload Section -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <h2 id="upload-header" class="text-2xl font-semibold mb-4 flex items-center">
+                        📊 Unggah File CSV
+                    </h2>
+                    <label for="file-input" class="sr-only">Pilih file CSV untuk dianalisis</label>
+                    <input type="file" id="file-input" multiple accept=".csv" 
+                           title="Pilih file CSV untuk dianalisis" 
+                           aria-label="Pilih file CSV untuk dianalisis"
+                           class="text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900/50 dark:file:text-indigo-300 dark:hover:file:bg-indigo-900"/>
+                </div>
+                <div class="flex items-center justify-end space-x-4">
+                     <div class="flex items-center">
+                        <input type="checkbox" id="merge-files-checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" checked>
+                        <label for="merge-files-checkbox" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Gabungkan File</label>
+                    </div>
+                </div>
+            </div>
+            <div id="message-area" class="mt-4 hidden p-4 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-md" role="alert">
+                <!-- Messages will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Dynamic Content Area -->
+        <div id="content-area" class="hidden">
+            <div class="border-b border-gray-200 dark:border-gray-700 mb-6">
+                <nav id="tabs-nav" class="-mb-px flex space-x-8" aria-label="Tabs">
+                    <!-- Tabs will be injected here -->
+                </nav>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+                <!-- Tab Content Panels -->
+                <div id="summary-tab-content" class="tab-content"></div>
+                <div id="details-tab-content" class="tab-content hidden"></div>
+                <div id="unpopular-tab-content" class="tab-content hidden"></div>
+                <div id="settings-tab-content" class="tab-content hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Script -->
+    <script src="js/csv-compare.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer - DesignTools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/resize-image.css">
+    <script>
+        // Tailwind dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">DesignTools</a>
+            <div class="nav-links" id="nav-links">
+                <a href="csv-compare.html" class="nav-link">CSV Compare</a>
+                <a href="keyword-bank.html" class="nav-link">Keyword Bank</a>
+                <a href="resize-image.html" class="nav-link active">Image Resizer</a>
+                <a href="DescriptionGRConverter.html" class="nav-link">Text to HTML</a>
+                <a href="CalculatorGaji.html" class="nav-link">Salary Calculator</a>
+                <button id="theme-toggle-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+                    <span class="theme-icon"></span>
+                </button>
+            </div>
+            <button id="hamburger-btn" title="Toggle Navigation Menu" aria-label="Toggle Navigation Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scroll-to-top-btn">↑</button>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <div class="title-section simple">
+            <h1>Image Resizer</h1>
+            <p class="subtitle">Resize dan konversi gambar Anda dengan mudah dan cepat</p>
+        </div>
+        <div class="section-divider"></div>
+
+        
+        <!-- Upload and Resize Section - Side by Side -->
+        <section class="controls-wrapper">
+            <div class="main-controls-grid">
+                <!-- Upload Section -->
+                <div class="upload-section">
+                    <div class="section-header compact">
+                        <h3>
+                            <span class="material-symbols-outlined section-icon">cloud_upload</span>
+                            Upload Images
+                        </h3>
+                        <div id="fileCountDisplay" class="file-count-display hidden">
+                            0 files
+                        </div>
+                    </div>
+                    
+                    <div id="dropArea" class="drop-area compact">
+                        <div class="drop-content">
+                            <div class="drop-icon-wrapper">
+                                <span class="material-symbols-outlined drop-icon">cloud_upload</span>
+                                <div class="upload-animation"></div>
+                            </div>
+                            <h4 class="drop-text-primary">Drag & Drop images</h4>
+                            <p class="drop-text-secondary">or click to browse</p>
+                            <label for="imageUpload" class="upload-button">
+                                <span class="material-symbols-outlined">add_photo_alternate</span>
+                                Choose Files
+                            </label>
+                            <input type="file" id="imageUpload" accept="image/*" multiple>
+                            <div class="supported-formats">
+                                <small>JPG, PNG, GIF, WEBP (Max 10MB)</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="progress-container hidden" id="progressContainer">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span id="progressPercent">0%</span>
+                                <span id="progressStatus">Uploading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resize Controls Section -->
+                <div class="resize-section">
+                    <div class="section-header compact">
+                        <h3>
+                            <span class="material-symbols-outlined section-icon">tune</span>
+                            Resize Settings
+                        </h3>
+                        <button class="btn-secondary compact" id="resetSettings">
+                            <span class="material-symbols-outlined">refresh</span>
+                            Reset
+                        </button>
+                    </div>
+                    
+                    <div class="resize-controls-compact">
+                        <div class="input-group">
+                            <label for="presetSelect">
+                                <span class="material-symbols-outlined label-icon">widgets</span>
+                                Quick Presets
+                            </label>
+                            <select id="presetSelect">
+                                <option value="">Custom Size</option>
+                                <option value="thumbnail">📱 Thumbnail (80x80px)</option>
+                                <option value="graphicriver">🎨 GraphicRiver (590px width)</option>
+                                <option value="cover_envato">🖼️ Cover Envato (2340x1560px)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="dimension-controls">
+                            <div class="dimension-inputs-compact">
+                                <div class="input-group">
+                                    <label for="widthInput">Width (px)</label>
+                                    <input type="number" id="widthInput" placeholder="Auto" min="1" max="5000">
+                                </div>
+                                <button type="button" id="aspectRatioLock" class="aspect-lock active" title="Lock aspect ratio">
+                                    <span class="material-symbols-outlined">link</span>
+                                </button>
+                                <div class="input-group">
+                                    <label for="heightInput">Height (px)</label>
+                                    <input type="number" id="heightInput" placeholder="Auto" min="1" max="5000">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="resizeAllButton" class="btn-primary btn-action">
+                            <span class="material-symbols-outlined">photo_size_select_large</span>
+                            Resize All Images
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview and Download Section -->
+        <section class="table-section">
+            <div class="section-header">
+                <h2>
+                    <span class="material-symbols-outlined section-icon">preview</span>
+                    Preview & Download
+                </h2>
+            </div>
+            
+            <!-- Download Controls -->
+            <div class="download-controls">
+                <div class="download-settings">
+                    <div class="setting-group">
+                        <div class="input-group compact">
+                            <label for="formatSelect">
+                                <span class="material-symbols-outlined label-icon">image</span>
+                                Format
+                            </label>
+                            <select id="formatSelect">
+                                <option value="image/png">PNG (lossless)</option>
+                                <option value="image/jpeg">JPEG (smaller)</option>
+                                <option value="image/webp">WebP (modern)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group compact">
+                            <label for="fileNamePattern">
+                                <span class="material-symbols-outlined label-icon">drive_file_rename_outline</span>
+                                Name Pattern
+                            </label>
+                            <input type="text" id="fileNamePattern" placeholder="{name}-resized" 
+                                   title="Use {name} for original name and {n} for sequence number.">
+                        </div>
+                    </div>
+                    
+                    <button id="downloadAllButton" class="btn-success btn-download">
+                        <span class="material-symbols-outlined">archive</span>
+                        Download All ZIP
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <div id="resizedImagesContainer" class="resized-images-container">
+                    <div class="placeholder-content">
+                        <div class="placeholder-illustration">
+                            <span class="material-symbols-outlined placeholder-icon">image</span>
+                            <div class="placeholder-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <h3 class="placeholder-title">Ready to resize your images?</h3>
+                        <p class="placeholder-text">Upload some images above to get started with resizing</p>
+                        <div class="placeholder-features">
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">speed</span>
+                                <span>Fast Processing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">high_quality</span>
+                                <span>High Quality</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="material-symbols-outlined">batch_prediction</span>
+                                <span>Batch Resize</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="js/resize-image.js"></script>
+    <script src="js/common.js"></script>
+</body>
+</html>

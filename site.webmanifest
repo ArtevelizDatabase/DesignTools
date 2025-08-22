@@ -1,0 +1,153 @@
+{
+  "name": "DesignTools - Professional Design & Productivity Suite",
+  "short_name": "DesignTools",
+  "description": "Comprehensive collection of design and productivity tools including CSV analysis, keyword management, image processing, and more.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "id": "designtools-pwa",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/72x72/3b82f6/ffffff?text=DT",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/96x96/3b82f6/ffffff?text=DT",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/128x128/3b82f6/ffffff?text=DT",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/144x144/3b82f6/ffffff?text=DT",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/152x152/3b82f6/ffffff?text=DT",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/192x192/3b82f6/ffffff?text=DT",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/384x384/3b82f6/ffffff?text=DT",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/3b82f6/ffffff?text=DT",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://via.placeholder.com/192x192/3b82f6/ffffff?text=DT",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/3b82f6/ffffff?text=DT",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "design", "business"],
+  "screenshots": [
+    {
+      "src": "https://via.placeholder.com/1280x720/f8fafc/1e293b?text=DesignTools+Desktop",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "DesignTools Desktop View"
+    },
+    {
+      "src": "https://via.placeholder.com/750x1334/f8fafc/1e293b?text=DesignTools+Mobile",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "DesignTools Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "CSV Compare",
+      "short_name": "CSV",
+      "description": "Compare and analyze CSV data",
+      "url": "/csv-compare.html",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/3b82f6/ffffff?text=📊",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Keyword Bank",
+      "short_name": "Keywords",
+      "description": "Manage your keyword collection",
+      "url": "/keyword-bank.html",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/8b5cf6/ffffff?text=🔑",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Image Resizer",
+      "short_name": "Resize",
+      "description": "Resize and optimize images",
+      "url": "/resize-image.html",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/10b981/ffffff?text=🖼️",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Salary Calculator",
+      "short_name": "Salary",
+      "description": "Calculate net salary",
+      "url": "/CalculatorGaji.html",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/96x96/059669/ffffff?text=💰",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"]
+}

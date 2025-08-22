@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional design and productivity suite with CSV analysis, keyword management, image resizing, text conversion, and salary calculation tools.">
+    <meta name="keywords" content="design tools, csv compare, keyword bank, image resizer, text to html, salary calculator, productivity, web tools">
+    <meta name="author" content="DesignTools">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#3b82f6">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:title" content="DesignTools - Professional Design & Productivity Suite">
+    <meta property="og:description" content="Comprehensive collection of design and productivity tools including CSV analysis, keyword management, image processing, and more.">
+    <meta property="og:image" content="https://yourdomain.com/assets/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/">
+    <meta property="twitter:title" content="DesignTools - Professional Design & Productivity Suite">
+    <meta property="twitter:description" content="Comprehensive collection of design and productivity tools including CSV analysis, keyword management, image processing, and more.">
+    <meta property="twitter:image" content="https://yourdomain.com/assets/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <title>DesignTools - Professional Design & Productivity Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        /* Custom animations and modern styling */
+        .tool-card {
+            animation: fadeInUp 0.8s ease-out both;
+        }
+        
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+        .tool-card:nth-child(4) { animation-delay: 0.4s; }
+        .tool-card:nth-child(5) { animation-delay: 0.5s; }
+        .tool-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Glass morphism effect */
+        .tool-card {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            border-radius: 4px;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        }
+        
+        /* Feature icons pulse animation */
+        .feature-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Tool icon hover animation */
+        .tool-icon:hover {
+            transform: rotate(5deg) scale(1.1);
+        }
+        
+        /* Responsive typography */
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        /* Enhanced focus states for accessibility */
+        .tool-card:focus {
+            outline: 3px solid #3b82f6;
+            outline-offset: 2px;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+    <script>
+        // Enhanced Tailwind dark mode configuration
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'bounce-slow': 'bounce 2s infinite'
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    },
+                    backdropBlur: {
+                        xs: '2px'
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.3)',
+                        'glow-lg': '0 0 40px rgba(59, 130, 246, 0.4)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">DesignTools</a>
+            <div class="nav-links" id="nav-links">
+                <a href="csv-compare.html" class="nav-link">CSV Compare</a>
+                <a href="keyword-bank.html" class="nav-link">Keyword Bank</a>
+                <a href="resize-image.html" class="nav-link">Image Resizer</a>
+                <a href="DescriptionGRConverter.html" class="nav-link">Text to HTML</a>
+                <a href="CalculatorGaji.html" class="nav-link">Salary Calculator</a>
+                <button id="theme-toggle-btn"><span class="theme-icon"></span></button>
+            </div>
+            <button id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scroll-to-top-btn">↑</button>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <!-- Tools Grid Section -->
+        <section class="tools-section py-20 px-4 bg-white dark:bg-gray-900">
+            <div class="max-w-7xl mx-auto">
+                <div class="section-header text-center mb-16">
+                    <h2 class="section-title text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        Choose Your Tool
+                    </h2>
+                    <p class="section-subtitle text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        Each tool is crafted with precision to enhance your productivity and streamline your creative process.
+                    </p>
+                </div>
+
+                <div class="tools-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- CSV Compare Tool -->
+                    <a href="csv-compare.html" class="tool-card group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-600 hover:-translate-y-2">
+                        <div class="tool-icon mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white text-3xl group-hover:scale-110 transition-transform duration-300">
+                                📊
+                            </div>
+                        </div>
+                        <h3 class="tool-title text-xl font-bold text-gray-900 dark:text-white mb-3">
+                            CSV Compare
+                        </h3>
+                        <p class="tool-description text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                            Analyze and compare CSV data with advanced visualization tools. Perfect for data analysis and reporting.
+                        </p>
+                        <div class="tool-features text-sm text-gray-500 dark:text-gray-400">
+                            <span class="feature-tag bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full mr-2">
+                                Data Analysis
+                            </span>
+                            <span class="feature-tag bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full">
+                                Visualization
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Keyword Bank Tool -->
+                    <a href="keyword-bank.html" class="tool-card group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-purple-200 dark:hover:border-purple-600 hover:-translate-y-2">
+                        <div class="tool-icon mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-3xl group-hover:scale-110 transition-transform duration-300">
+                                🔑
+                            </div>
+                        </div>
+                        <h3 class="tool-title text-xl font-bold text-gray-900 dark:text-white mb-3">
+                            Keyword Bank
+                        </h3>
+                        <p class="tool-description text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                            Organize and manage your keyword collections with cloud storage. Search, categorize, and export with ease.
+                        </p>
+                        <div class="tool-features text-sm text-gray-500 dark:text-gray-400">
+                            <span class="feature-tag bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full mr-2">
+                                Cloud Storage
+                            </span>
+                            <span class="feature-tag bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full">
+                                SEO Tools
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Image Resizer Tool -->
+                    <a href="resize-image.html" class="tool-card group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-green-200 dark:hover:border-green-600 hover:-translate-y-2">
+                        <div class="tool-icon mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white text-3xl group-hover:scale-110 transition-transform duration-300">
+                                🖼️
+                            </div>
+                        </div>
+                        <h3 class="tool-title text-xl font-bold text-gray-900 dark:text-white mb-3">
+                            Image Resizer
+                        </h3>
+                        <p class="tool-description text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                            Resize and optimize images in bulk. Maintain quality while reducing file sizes for web and print.
+                        </p>
+                        <div class="tool-features text-sm text-gray-500 dark:text-gray-400">
+                            <span class="feature-tag bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded-full mr-2">
+                                Batch Process
+                            </span>
+                            <span class="feature-tag bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded-full">
+                                Quality Control
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Text to HTML Tool -->
+                    <a href="DescriptionGRConverter.html" class="tool-card group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-orange-200 dark:hover:border-orange-600 hover:-translate-y-2">
+                        <div class="tool-icon mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center text-white text-3xl group-hover:scale-110 transition-transform duration-300">
+                                📝
+                            </div>
+                        </div>
+                        <h3 class="tool-title text-xl font-bold text-gray-900 dark:text-white mb-3">
+                            Text to HTML
+                        </h3>
+                        <p class="tool-description text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                            Convert plain text to formatted HTML with custom styling options. Perfect for content creators.
+                        </p>
+                        <div class="tool-features text-sm text-gray-500 dark:text-gray-400">
+                            <span class="feature-tag bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-2 py-1 rounded-full mr-2">
+                                Text Processing
+                            </span>
+                            <span class="feature-tag bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-2 py-1 rounded-full">
+                                HTML Output
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Salary Calculator Tool -->
+                    <a href="CalculatorGaji.html" class="tool-card group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-emerald-200 dark:hover:border-emerald-600 hover:-translate-y-2">
+                        <div class="tool-icon mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-3xl group-hover:scale-110 transition-transform duration-300">
+                                💰
+                            </div>
+                        </div>
+                        <h3 class="tool-title text-xl font-bold text-gray-900 dark:text-white mb-3">
+                            Salary Calculator
+                        </h3>
+                        <p class="tool-description text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                            Calculate net salary with tax deductions and benefits. Plan your finances with accurate projections.
+                        </p>
+                        <div class="tool-features text-sm text-gray-500 dark:text-gray-400">
+                            <span class="feature-tag bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded-full mr-2">
+                                Tax Calculator
+                            </span>
+                            <span class="feature-tag bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-2 py-1 rounded-full">
+                                Financial Planning
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Coming Soon Card -->
+                    <div class="tool-card group bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-600 opacity-75">
+                        <div class="tool-icon mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl flex items-center justify-center text-white text-3xl">
+                                🚀
+                            </div>
+                        </div>
+                        <h3 class="tool-title text-xl font-bold text-gray-600 dark:text-gray-400 mb-3">
+                            More Tools Coming
+                        </h3>
+                        <p class="tool-description text-gray-500 dark:text-gray-500 mb-4 leading-relaxed">
+                            We're constantly adding new tools to enhance your productivity. Stay tuned for exciting updates!
+                        </p>
+                        <div class="tool-features text-sm text-gray-400 dark:text-gray-500">
+                            <span class="feature-tag bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-1 rounded-full">
+                                Coming Soon
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section py-20 px-4 bg-gray-50 dark:bg-gray-800">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        Why Choose DesignTools?
+                    </h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Built with modern technologies and user experience in mind.
+                    </p>
+                </div>
+
+                <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-item text-center">
+                        <div class="feature-icon w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 text-2xl mx-auto mb-4">
+                            ⚡
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Lightning Fast</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Optimized for speed and performance across all devices.</p>
+                    </div>
+                    <div class="feature-item text-center">
+                        <div class="feature-icon w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400 text-2xl mx-auto mb-4">
+                            🔒
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Secure & Private</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Your data is processed locally and securely stored.</p>
+                    </div>
+                    <div class="feature-item text-center">
+                        <div class="feature-icon w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-green-600 dark:text-green-400 text-2xl mx-auto mb-4">
+                            📱
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Responsive Design</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Works seamlessly on desktop, tablet, and mobile devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/common.js"></script>
+    
+    <!-- PWA Installation and Service Worker -->
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('Service Worker registered successfully:', registration.scope);
+                    
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // Show update available notification
+                                showUpdateNotification();
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error('Service Worker registration failed:', error);
+                }
+            });
+        }
+        
+        // PWA Installation
+        let deferredPrompt;
+        const installButton = document.createElement('button');
+        installButton.textContent = '📱 Install App';
+        installButton.className = 'fixed bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 z-50 hidden';
+        installButton.id = 'install-button';
+        document.body.appendChild(installButton);
+        
+        // Listen for the beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA install prompt triggered');
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button
+            installButton.classList.remove('hidden');
+            
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('PWA install outcome:', outcome);
+                    
+                    if (outcome === 'accepted') {
+                        installButton.classList.add('hidden');
+                    }
+                    
+                    deferredPrompt = null;
+                }
+            });
+        });
+        
+        // Hide install button when app is installed
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            installButton.classList.add('hidden');
+            deferredPrompt = null;
+        });
+        
+        // Show update notification
+        function showUpdateNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-blue-600 text-white p-4 rounded-lg shadow-lg z-50 max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium">Update Available</p>
+                        <p class="text-xs opacity-75">A new version is ready</p>
+                    </div>
+                    <button onclick="updateApp()" class="bg-white text-blue-600 px-3 py-1 rounded text-xs font-medium hover:bg-blue-50">
+                        Update
+                    </button>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white hover:text-blue-200">
+                        ×
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 10 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 10000);
+        }
+        
+        // Update app function
+        function updateApp() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration && registration.waiting) {
+                        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+        
+        // Network status indicator
+        function updateNetworkStatus() {
+            const isOnline = navigator.onLine;
+            const indicator = document.getElementById('network-indicator') || createNetworkIndicator();
+            
+            if (isOnline) {
+                indicator.className = 'fixed top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium z-40 transition-all duration-300';
+                indicator.textContent = '🟢 Online';
+            } else {
+                indicator.className = 'fixed top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-medium z-40 transition-all duration-300';
+                indicator.textContent = '🔴 Offline';
+            }
+        }
+        
+        function createNetworkIndicator() {
+            const indicator = document.createElement('div');
+            indicator.id = 'network-indicator';
+            document.body.appendChild(indicator);
+            return indicator;
+        }
+        
+        // Listen for network changes
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+        window.addEventListener('load', updateNetworkStatus);
+    </script>
+</body>
+</html>

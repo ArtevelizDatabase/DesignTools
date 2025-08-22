@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Disallow access to configuration files
+Disallow: /js/config.js
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Sitemap location (create this later)
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
