@@ -74,3 +74,14 @@ out/
 
 # Cache
 .cache/
+
+# Documentation backup files (to prevent accidental commits)
+*.md.bak
+*.md.backup
+
+# Config backup files
+config.js.bak
+config.js.backup
+
+# Any duplicate directories
+resize-image/
